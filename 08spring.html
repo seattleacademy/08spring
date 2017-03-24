@@ -75,9 +75,9 @@
         scene.add(wall4);
 
         //bottomradius,topradius,height,sidesOfPolygon
-        var roomba = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 8, 100), new THREE.MeshNormalMaterial());
+        var roomba = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 4, 100), new THREE.MeshNormalMaterial());
         //back-forth,up-down,left-right
-        roomba.position.set(-25, 4, -40);
+        roomba.position.set(-25, 8, -40);
         //roomba.rotation.z = Math.PI/2;
         scene.add(roomba);
 
@@ -130,7 +130,7 @@
         scene.add(light2);
 
         // controls for moving the camera
-        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        var controls = new THREE.OrbitControls(camera, canvas);
 
     }
     function animate() {
