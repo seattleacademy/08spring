@@ -16,7 +16,6 @@
     init();
     animate();
 
-
     // initialize scene
     function init() {
         canvas = document.getElementById("myCanvas");
@@ -32,32 +31,27 @@
 
         renderer.setSize(width, height);
 
-        //renderer.setClearColor(0x3f4a51, 1);
         //background color and opacity
-        renderer.setClearColor(0x00FF00, .8);
-
-
+        renderer.setClearColor(0xFF0000, .7);
 
         // setup materials for making things look decent
         var material = new THREE.MeshPhongMaterial({
-            // color: 0xAAAAAA,
-            // specular: 0x111111,
-            color: 0x0000FF,
-            specular: 0xFF0000,
+            color: 0x800080,
+            specular: 0x800000,
             shininess: 200
         });
 
 
         // start adding objects to the scene, these are the planes that make up the floor and walls
-        var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), material);
-        plane.position.set(0, 4, 0);
-        plane.rotation.x = -Math.PI / 2;
-        scene.add(plane);
+        var floor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), material);
+        floor.position.set(0, 4, 0);
+        floor.rotation.x = -Math.PI / 2;
+        scene.add(floor);
 
         //Left Wall
         var wall1 = new THREE.Mesh(new THREE.PlaneGeometry(80, 20), material);
         wall1.position.set(-10, 14, -50);
-        wall1.rotation.x = 0;
+        wall1.rotation.y = Math.PI;
         wall1.material.side = THREE.DoubleSide;
         scene.add(wall1);
         //Front Wall
@@ -80,12 +74,12 @@
         wall4.material.side = THREE.DoubleSide;
         scene.add(wall4);
 
-
-        var roomba = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 3, 100, 10), new THREE.MeshNormalMaterial());
-        roomba.position.set(-30, 7, -40);
-        roomba.rotation.x = 0;
+        //bottomradius,topradius,height,sidesOfPolygon
+        var roomba = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 8, 100), new THREE.MeshNormalMaterial());
+        //back-forth,up-down,left-right
+        roomba.position.set(-25, 4, -40);
+        //roomba.rotation.z = Math.PI/2;
         scene.add(roomba);
-
 
         // add a torus that will be the drone
         var torus = new THREE.Mesh(new THREE.TorusGeometry(5, 5, 80, 60, Math.PI * 2), new THREE.MeshNormalMaterial());
@@ -97,32 +91,31 @@
 
         // make movement controls for the torus object
         window.addEventListener("keydown", function(event) {
-            switch (event.keyCode) {
-                case 87: //w
-                    torus.position.x += 1;
-                    break;
-                case 83: //s
-                    torus.position.x -= 1;
-                    break;
-                case 65:
-                    torus.position.z -= 1;
-                    break;
-                case 68:
-                    torus.position.z += 1;
-                    break;
-                case 81:
-                    torus.position.y += 1;
-                    break;
-                case 69:
-                    torus.position.y -= 1;
-                    break;
-                case 192:
-                    console.log("Camera Position:", camera.position.x + " " + camera.position.y + " " + camera.position.z)
-                    break;
+            if (event.key === "w") {
+                torus.position.x += 1;
+            }
+            if (event.key === "s") {
+                torus.position.x -= 1;
+            }
+            if (event.key === "a") {
+                torus.position.z -= 1;
+            }
+            if (event.key === "d") {
+                torus.position.z += 1;
+            }
+            if (event.key === "q") {
+                torus.position.y += 1;
+            }
+            if (event.key === "e") {
+                torus.position.y -= 1;
+            }
+            if (event.key === "`") {
+                console.log("Camera Position:", camera.position.x + " " + camera.position.y + " " + camera.position.z)
             }
         });
 
         // create camera and position in the scene
+        //fov,aspect,nearest,farthest
         camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 20000);
         camera.position.set(-70, 50, -10);
         scene.add(camera);
@@ -140,10 +133,8 @@
         var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
     }
-    // threejs updater
     function animate() {
         requestAnimationFrame(animate);
-        // render scene
         renderer.render(scene, camera);
     }
     </script>
