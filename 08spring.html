@@ -9,8 +9,7 @@
 </head>
 
 <body>
-<canvas id="myCanvas" width="600" height="400"></canvas>
-
+    <canvas id="myCanvas" width="600" height="400"></canvas>
     <script>
     var scene, camera, renderer;
 
@@ -26,25 +25,25 @@
 
         var width = canvas.width;
         var height = canvas.height;
-        renderer = new THREE.WebGLRenderer({canvas: canvas,
+        renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
             antialias: true
         });
 
         renderer.setSize(width, height);
-        document.body.appendChild(renderer.domElement);
-        renderer.setClearColor(0x3f4a51, 1);
+
+        //renderer.setClearColor(0x3f4a51, 1);
+        //background color and opacity
+        renderer.setClearColor(0x00FF00, .8);
 
 
 
         // setup materials for making things look decent
         var material = new THREE.MeshPhongMaterial({
-            color: 0xAAAAAA,
-            specular: 0x111111,
-            shininess: 200
-        });
-        var green = new THREE.MeshPhongMaterial({
-            color: 0xAAFFAA,
-            specular: 0x111111,
+            // color: 0xAAAAAA,
+            // specular: 0x111111,
+            color: 0x0000FF,
+            specular: 0xFF0000,
             shininess: 200
         });
 
@@ -55,29 +54,38 @@
         plane.rotation.x = -Math.PI / 2;
         scene.add(plane);
 
-        var wall1 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
-        wall1.position.set(0, 14, -50);
+        //Left Wall
+        var wall1 = new THREE.Mesh(new THREE.PlaneGeometry(80, 20), material);
+        wall1.position.set(-10, 14, -50);
         wall1.rotation.x = 0;
-        plane.material.side = THREE.DoubleSide;
+        wall1.material.side = THREE.DoubleSide;
         scene.add(wall1);
-
+        //Front Wall
         var wall2 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
         wall2.position.set(-50, 14, 0);
         wall2.rotation.y = -Math.PI / 2;
-        plane.material.side = THREE.DoubleSide;
+        wall2.material.side = THREE.DoubleSide;
         scene.add(wall2);
-
+        //Right Wall
         var wall3 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
+        //slide, updown, inout
         wall3.position.set(0, 14, 50);
         wall3.rotation.y = 0;
-        plane.material.side = THREE.DoubleSide;
+        wall3.material.side = THREE.DoubleSide;
         scene.add(wall3);
-
+        //BackWall
         var wall4 = new THREE.Mesh(new THREE.PlaneGeometry(100, 20), material);
         wall4.position.set(50, 14, 0);
         wall4.rotation.y = -Math.PI / 2;
-        plane.material.side = THREE.DoubleSide;
+        wall4.material.side = THREE.DoubleSide;
         scene.add(wall4);
+
+
+        var roomba = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 3, 100, 10), new THREE.MeshNormalMaterial());
+        roomba.position.set(-30, 5, -40);
+        roomba.rotation.x = 0;
+        scene.add(roomba);
+
 
         // add a torus that will be the drone
         var torus = new THREE.Mesh(new THREE.TorusGeometry(5, 5, 80, 60, Math.PI * 2), new THREE.MeshNormalMaterial());
@@ -115,7 +123,7 @@
         });
 
         // create camera and position in the scene
-        camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 20000);
+        camera = new THREE.PerspectiveCamera(160, width / height, 0.1, 20000);
         camera.position.set(-70, 50, -10);
         scene.add(camera);
 
