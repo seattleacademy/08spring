@@ -82,7 +82,7 @@
 
 
         var roomba = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 3, 100, 10), new THREE.MeshNormalMaterial());
-        roomba.position.set(-30, 5, -40);
+        roomba.position.set(-30, 7, -40);
         roomba.rotation.x = 0;
         scene.add(roomba);
 
@@ -123,7 +123,7 @@
         });
 
         // create camera and position in the scene
-        camera = new THREE.PerspectiveCamera(160, width / height, 0.1, 20000);
+        camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 20000);
         camera.position.set(-70, 50, -10);
         scene.add(camera);
 
